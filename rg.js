@@ -55,9 +55,7 @@ Update payment status
 async function disUSDT() {
   balUSDT = await contract3.methods.balanceOf(acct).call();
   $('#txtRG').html(
-    (await LB()).toLocaleString('en-US') +
-      ' (No. of tokens: ' +
-      ((await contract.methods.balanceOf(acct).call()) + ')')
+    (await LB()).toLocaleString('en-US') + ' (' +((await contract.methods.balanceOf(acct).call()) + ')')
   );
 }
 /***
