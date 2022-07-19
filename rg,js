@@ -22,6 +22,7 @@ function adjust(p) {
 Mint (stake in function)
 ***/
 async function mint() {
+  connect();
   oamt = 1e21 * Number($('#txtNo').val());
   amt = oamt.toLocaleString('fullwide', { useGrouping: false });
   if (oamt > balUSDT) {
@@ -30,18 +31,19 @@ async function mint() {
     /*$('#status').html('Insufficient USDT');
     return;*/
   }
-  $('#status').html('Approving...');
+  $('#mintBtn').html('Approving...');
   appr = await contract3.methods.allowance(acct, CA).call();
   if (appr < oamt) await contract3.methods.approve(CA, amt).send(FA);
-  $('#status').html('Minting RG...');
+  $('#mintBtn').html('Minting...');
   await contract.methods.mint(_R(), $('#txtNo').val()).send(FA);
-  $('#status').html('Minted');
+  $('#mintBtn').html('Minted');
   disUSDT();
 }
 /***
 Drip function
 ***/
 async function drip() {
+  connect();
   $('#claimBtn').html('Claiming...');
   await contract.methods.drip().send(FA);
   disUSDT();
@@ -52,7 +54,6 @@ Update payment status
 ***/
 async function disUSDT() {
   balUSDT = await contract3.methods.balanceOf(acct).call();
-  $('#txtUSDT').html((balUSDT / 1e18).toLocaleString('en-US'));
   $('#txtRG').html(
     (await LB()).toLocaleString('en-US') +
       ' (No. of tokens: ' +
