@@ -42,10 +42,10 @@ async function mint() {
 Drip function
 ***/
 async function drip() {
-  $('#status').html('Dripping...');
+  $('#claimBtn').html('Claiming...');
   await contract.methods.drip().send(FA);
   disUSDT();
-  $('#status').html('Dripped');
+  $('#claimBtn').html('Claimed');
 }
 /***
 Update payment status
