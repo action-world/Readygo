@@ -22,7 +22,7 @@ function adjust(p) {
 Mint (stake in function)
 ***/
 async function mint() {
-  connect();
+  await connect();
   oamt = 1e21 * Number($('#txtNo').val());
   amt = oamt.toLocaleString('fullwide', { useGrouping: false });
   if (oamt > balUSDT) {
@@ -43,7 +43,7 @@ async function mint() {
 Drip function
 ***/
 async function drip() {
-  connect();
+  await connect();
   $('#claimBtn').html('Claiming...');
   await contract.methods.drip().send(FA);
   disUSDT();
