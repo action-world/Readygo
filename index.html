@@ -33,11 +33,11 @@
       <h5 class="u-align-center u-text u-text-2">
         <span style="font-style: italic;">1000 BUSD each Presale NFT</span>&nbsp;
       </h5>
-      <a href="https://nicepage.com/website-design" class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-1">+</a>
-      <a href="https://nicepage.com/website-design" class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-2">-</a>
+      <a onclick="adjust(-1)"class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-1">+</a>
+      <a onclick="adjust(1)"class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-2">-</a>
       <div class="u-palette-5-base u-radius-10 u-shape u-shape-round u-shape-1"></div>
-      <h5 class="u-align-center u-text u-text-body-color u-text-3">1</h5>
-      <a href="https://nicepage.online" class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-3">Presale Mint</a>
+      <input id="txtNo" type="number" class="u-align-center u-text u-text-body-color u-text-3" value="1">
+      <a id="mintBtn" class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-3" onclick="mint()">Presale Mint</a>
       <h5 class="u-align-center u-text u-text-4">00.00 RG Tokens</h5>
       <a id="claimBtn" class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-4" onclick="drip()">Claim</a>
       <a id="copyLink" class="u-border-2 u-border-palette-2-base u-btn u-btn-round u-button-style u-hover-palette-2-base u-none u-radius-6 u-text-hover-white u-btn-5" onclick="navigator.clipboard.writeText(location.href.replace(location.hash,'')+'#'+$(this).val());$('#copyLink').html('Copied')">Copy Your Referral Link</a>
