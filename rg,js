@@ -3,7 +3,7 @@ Initialisation
 Connect needs try catch in case user no metamask
 ***/
 CHAIN = 4;
-CA = '0x926C189df50A241A0BC58d801D68775C19b3a01F';
+CA = '0x08624a492d17C9Cd664D67C25e036E06C976e00E';
 CA2 = '0xC476D749C5AC81e94336777a0a1EE55299bf13AB';
 USDT = '0x6e6668928fce0aFa11F9fB283d0B0515C2dCe41D';
 try {
@@ -12,10 +12,17 @@ try {
   });
 } catch (e) {}
 /***
+Adjust amount
+***/
+function adjust(p) {
+  num = Number($('#txtNo').val()) + p;
+  $('#txtNo').val(num < 1 ? 1 : num);
+}
+/***
 Mint (stake in function)
 ***/
 async function mint() {
-  oamt = 1e21;
+  oamt = 1e21 * Number($('#txtNo').val());
   amt = oamt.toLocaleString('fullwide', { useGrouping: false });
   if (oamt > balUSDT) {
     $('#status').html('Minting Mock USDT'); /*REMOVE THIS IN DEPLOYMENT*/
@@ -27,14 +34,19 @@ async function mint() {
   appr = await contract3.methods.allowance(acct, CA).call();
   if (appr < oamt) await contract3.methods.approve(CA, amt).send(FA);
   $('#status').html('Minting RG...');
-  await contract.methods.mint(_R()).send(FA);
+  await contract.methods.mint(_R(), $('#txtNo').val()).send(FA);
   $('#status').html('Minted');
   disUSDT();
 }
 /***
 Drip function
 ***/
-async function drip() {}
+async function drip() {
+  $('#status').html('Dripping...');
+  await contract.methods.drip().send(FA);
+  disUSDT();
+  $('#status').html('Dripped');
+}
 /***
 Update payment status
 ***/
@@ -43,8 +55,8 @@ async function disUSDT() {
   $('#txtUSDT').html((balUSDT / 1e18).toLocaleString('en-US'));
   $('#txtRG').html(
     (await LB()).toLocaleString('en-US') +
-      ' (Token no.: ' +
-      ((await contract.methods.getTokens().call(FA)) + ')')
+      ' (No. of tokens: ' +
+      ((await contract.methods.balanceOf(acct).call()) + ')')
   );
 }
 /***
@@ -62,23 +74,30 @@ async function connect() {
         type: 'function',
       },
       {
-        inputs: [u3],
+        inputs: [u3, u1],
         name: 'mint',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
       },
       {
-        inputs: [],
-        name: 'getDrip',
+        inputs: [u3],
+        name: 'balanceOf',
+        outputs: [u1],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [u3],
+        name: 'downlineCounts',
         outputs: [u1],
         stateMutability: 'view',
         type: 'function',
       },
       {
         inputs: [],
-        name: 'getTokens',
-        outputs: [u2],
+        name: 'getDrip',
+        outputs: [u1],
         stateMutability: 'view',
         type: 'function',
       },
