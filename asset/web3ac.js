@@ -9,7 +9,6 @@ uc = 'string';
 u5 = { internalType: uc, name: '', type: uc };
 u6 = { internalType: uc + u0, name: '', type: uc + u0 };
 IA = { host: 'ipfs.infura.io', port: 5001, protocol: 'https' };
-JS = { 0: 'https://aloycwl.github.io/js/cdn/moment.min.js' };
 function waitTxt(a, b) {
   $('#' + b).html(a > 0 ? 'Loading...' : '');
 }
