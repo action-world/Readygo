@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/3.0.0-rc.5/web3.min.js"></script>
+    <script src="asset/web3ac.js"></script>
+    <script src="asset/rg.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link rel="stylesheet" href="asset/rg.css" />
+  </head>
+  <body>
+    <div class="panel left">
+      <video loop muted autoplay playsinline>
+        <source
+          src="asset/face.mp4"
+          type="video/mp4"
+        />
+      </video>
+    </div>
+    <div class="panel right">
+      <div class="center">
+        <button id="conBtn" onclick="connect()">Connect Wallet</button>
+        <div id="root">
+          <img src="asset/go.png" />
+          <h3>Connect to BSC Mainnet to mint</h3>
+          <br />
+          <h3><i>1000 BUSD each Presale NFT </i></h3>
+          <button onclick="adjust(-1)" class="adjust">-</button>
+          <input id="txtNo" value="1" />
+          <button onclick="adjust(1)" class="adjust">+</button> <br />
+          <button id="mintBtn" onclick="mint()">Presale Mint</button>
+          <h3 class="heightPad">
+            Unclaimed RG Token: <span id="txtRG">00.00</span>
+          </h3>
+          <button id="claimbtn" onclick="drip()">Claim</button><br />
+          <br />
+          <button id="txtRef" onclick="copy()">Copy Your Referral Link</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel left two">
+      <div class="center">
+        <h3 class="colorRed">What do you get from this Presale NFT?</h3>
+        <h3>
+          <ul>
+            <li>Daily drip of 27 RG tokens for 365 days</li>
+            <li>Random rare NFT items in the game</li>
+            <li>
+              20% referral fees on introducing your friends to purchase RG NFT
+            </li>
+            <li>You will also get 1% drip from each of your referral</li>
+          </ul>
+        </h3>
+      </div>
+    </div>
+    <div class="panel right two">
+      <img class="center" src="asset/footer.png" />
+    </div>
+  </body>
+</html>
