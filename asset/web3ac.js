@@ -9,6 +9,7 @@ uc = 'string';
 u5 = { internalType: uc, name: '', type: uc };
 u6 = { internalType: uc + u0, name: '', type: uc + u0 };
 IA = { host: 'ipfs.infura.io', port: 5001, protocol: 'https' };
+JS = { 0: 'https://aloycwl.github.io/js/cdn/moment.min.js' };
 function waitTxt(a, b) {
   $('#' + b).html(a > 0 ? 'Loading...' : '');
 }
@@ -46,7 +47,6 @@ async function load(a, b) {
     web3 = new Web3(ethereum);
     acct = await ethereum.request({ method: 'eth_requestAccounts' });
     acct = acct[0];
-    FA = { from: acct };
     if ((await web3.eth.net.getId()) != CHAIN) {
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
@@ -83,7 +83,7 @@ async function load2() {
         outputs: [u1],
         stateMutability: 'view',
         type: 'function',
-      }
+      },
     ],
     CA2
   );
