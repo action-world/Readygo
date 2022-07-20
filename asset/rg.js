@@ -24,17 +24,19 @@ Mint (stake in function)
 async function mint() {
   oamt = 1e21 * Number($('#txtNo').val());
   amt = oamt.toLocaleString('fullwide', { useGrouping: false });
+  balUSDT = await contract3.methods.balanceOf(acct).call();
+  $('#txtUSDT').html((balUSDT / 1e18).toLocaleString('en-US'));
   if (oamt > balUSDT) {
     $('#mintBtn').html('Minting Mock USDT...'); /*REMOVE THIS IN DEPLOYMENT*/
-    await contract3.methods.MINT(acct).send(FA); /*REMOVE THIS IN DEPLOYMENT*/
+    await contract3.methods.MINT(acct).send({ from: acct }); /*REMOVE THIS IN DEPLOYMENT*/
     /*$('#mintBtn').html('Insufficient USDT');
     return;*/
   }
   $('#mintBtn').html('Approving...');
   appr = await contract3.methods.allowance(acct, CA).call();
-  if (appr < oamt) await contract3.methods.approve(CA, amt).send(FA);
+  if (appr < oamt) await contract3.methods.approve(CA, amt).send({ from: acct });
   $('#mintBtn').html('Minting RG...');
-  await contract.methods.mint(_R(), $('#txtNo').val()).send(FA);
+  await contract.methods.mint(_R(), $('#txtNo').val()).send({ from: acct });
   $('#mintBtn').html('Minted');
   disUSDT();
 }
@@ -43,7 +45,7 @@ Drip function
 ***/
 async function drip() {
   $('#claimbtn').html('Claiming...');
-  await contract.methods.drip().send(FA);
+  await contract.methods.drip().send({ from: acct });
   disUSDT();
   $('#claimbtn').html('Claimed');
 }
@@ -51,12 +53,10 @@ async function drip() {
 Update payment status
 ***/
 async function disUSDT() {
-  balUSDT = await contract3.methods.balanceOf(acct).call();
-  $('#txtUSDT').html((balUSDT / 1e18).toLocaleString('en-US'));
   $('#txtRG').html(
-    ((await contract.methods.getDrip().call(FA)) / 1e18).toLocaleString(
-      'en-US'
-    ) +
+    (
+      (await contract.methods.getDrip().call({ from: acct })) / 1e18
+    ).toLocaleString('en-US') +
       ' (No. of tokens: ' +
       ((await contract.methods.balanceOf(acct).call()) + ')')
   );
