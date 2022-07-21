@@ -24,14 +24,16 @@
         <h3>Connect to BSC Mainnet to mint</h3>
         <br />
         <h3><i>1000 BUSD each Presale NFT </i></h3>
+        <br />
         <button id="conBtn" onclick="connect()">Connect Wallet</button>
         <div id="root">
+          <h3 id="left" class="colorRed">NFT left to grab!</h3>
           <button onclick="adjust(-1)" class="adjust">-</button>
           <input id="txtNo" value="1" />
           <button onclick="adjust(1)" class="adjust">+</button> <br />
           <button id="mintBtn" onclick="mint()">Presale Mint</button>
           <h3 class="heightPad">
-            Unclaimed RG Token: <span id="txtRG">00.00</span>
+            Unclaimed RG Token: <span id="txtRG">0.0</span>
           </h3>
           <button id="claimbtn" onclick="drip()">Claim</button><br />
           <br />
@@ -46,7 +48,9 @@
           <ul>
             <li>Daily drip of 27 RG tokens for 365 days</li>
             <li>Random rare NFT items in the game</li>
-            <li>20% referral fees on introducing your friends to purchase RG NFT</li>
+            <li>
+              20% referral fees on introducing your friends to purchase RG NFT
+            </li>
             <li>You will also get 1% drip from each of your referral</li>
           </ul>
         </h3>
