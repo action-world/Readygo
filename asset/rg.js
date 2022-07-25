@@ -1,7 +1,7 @@
-const CHAIN = 4,
-  CA = '0x1747015b28295132d131A524B300b37d9EF2300c',
-  CA2 = '0x204DA0e98EAf4c20db8df4aa67F54e0F31888c7B',
-  USDT = '0x263b0355B80d384C55dec84DD13DFa10D2141442',
+const CHAIN = 97,
+  CA = '0xC95f2d6011F1A7F02051dD4188A8BbBbeeb328D4',
+  CA2 = '0xDf7D66B3396765F716c057b946D08fCB3A7192B8',
+  USDT = '0x2dbc89FadB4cB41F35a0AecEa6DeCE15DBa392C1',
   u0 = '[]',
   ua = 'uint256',
   u1 = { internalType: ua, name: '', type: ua },
@@ -25,7 +25,7 @@ async function mint() {
   amt = (oamt = 1e21 * Number($('#txtNo').val())).toLocaleString('fullwide', {
     useGrouping: !1,
   });
-  balUSDT = await contract3.methods.balanceOf(acct).call();
+  balUSDT = await contract3.methods.balanceOf(acct).call({ from: acct });
   $('#txtUSDT').html((balUSDT / 1e18).toLocaleString('en-US')),
     oamt > balUSDT &&
       ($('#mintBtn').html('Minting Mock USDT...'),
@@ -70,70 +70,64 @@ async function copy() {
     $('#txtRef').html('Copied');
 }
 async function connect() {
-  $('#conBtn').hide(),
-    'undefined' != typeof CS &&
-      $('head').append(
-        $(
-          '<meta name="viewport"content="width=device-width,initial-scale=1.0"><link rel="stylesheet">'
-        ).attr('href', CS)
-      ),
-    'undefined' != typeof ethereum &&
-      ((web3 = new Web3(ethereum)),
-      (acct = await ethereum.request({ method: 'eth_requestAccounts' })),
-      (acct = acct[0]),
-      (await web3.eth.net.getId()) != 4 &&
-        (await ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x4' }],
-        })),
-      (contract = new web3.eth.Contract(
-        [
-          {
-            inputs: [],
-            name: 'drip',
-            outputs: [],
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          {
-            inputs: [u3, u1],
-            name: 'mint',
-            outputs: [],
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          {
-            inputs: [u3],
-            name: 'balanceOf',
-            outputs: [u1],
-            stateMutability: 'view',
-            type: 'function',
-          },
-          {
-            inputs: [u3],
-            name: 'downlineCounts',
-            outputs: [u1],
-            stateMutability: 'view',
-            type: 'function',
-          },
-          {
-            inputs: [],
-            name: 'getDrip',
-            outputs: [u1],
-            stateMutability: 'view',
-            type: 'function',
-          },
-          {
-            inputs: [],
-            name: '_count',
-            outputs: [u1],
-            stateMutability: 'view',
-            type: 'function',
-          },
-        ],
-        CA
-      ))),
-    (contract3 = new web3.eth.Contract(
+  $('#conBtn').hide();
+  if ('undefined' != typeof ethereum) {
+    web3 = new Web3(ethereum);
+    acct = await ethereum.request({ method: 'eth_requestAccounts' });
+    acct = acct[0];
+    if ((await web3.eth.net.getId()) != CHAIN)
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x' + CHAIN.toString(16) }],
+      });
+    contract = new web3.eth.Contract(
+      [
+        {
+          inputs: [],
+          name: 'drip',
+          outputs: [],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+        {
+          inputs: [u3, u1],
+          name: 'mint',
+          outputs: [],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+        {
+          inputs: [u3],
+          name: 'balanceOf',
+          outputs: [u1],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [u3],
+          name: 'downlineCounts',
+          outputs: [u1],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [],
+          name: 'getDrip',
+          outputs: [u1],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [],
+          name: '_count',
+          outputs: [u1],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ],
+      CA
+    );
+    contract3 = new web3.eth.Contract(
       [
         {
           inputs: [u3],
@@ -164,8 +158,9 @@ async function connect() {
           type: 'function',
         },
       ],
-      '0x263b0355B80d384C55dec84DD13DFa10D2141442'
-    )),
-    $('#root').show(),
+      USDT
+    );
+    $('#root').show();
     await disUSDT();
+  }
 }
