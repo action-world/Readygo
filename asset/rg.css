@@ -12,6 +12,7 @@ body {
   height: 100%;
   width: 50%;
   position: absolute;
+  z-index: 0;
 }
 @media only screen and (min-width: 600px) {
   .left {
@@ -95,7 +96,7 @@ video {
   color: #f44336;
 }
 .topright {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   z-index: 1;
