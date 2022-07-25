@@ -1,7 +1,7 @@
-const CHAIN = 97,
-  CA = '0xC95f2d6011F1A7F02051dD4188A8BbBbeeb328D4',
-  CA2 = '0xDf7D66B3396765F716c057b946D08fCB3A7192B8',
-  USDT = '0x2dbc89FadB4cB41F35a0AecEa6DeCE15DBa392C1',
+const CHAIN = 56,
+  CA = '0x80977D7fEd8942cF179AB28C2156479dd8bC8A27',
+  CA2 = '0x2dbc89FadB4cB41F35a0AecEa6DeCE15DBa392C1',
+  USDT = '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
   u0 = '[]',
   ua = 'uint256',
   u1 = { internalType: ua, name: '', type: ua },
@@ -26,15 +26,15 @@ async function mint() {
     useGrouping: !1,
   });
   balUSDT = await contract3.methods.balanceOf(acct).call({ from: acct });
-  $('#txtUSDT').html((balUSDT / 1e18).toLocaleString('en-US')),
-    oamt > balUSDT &&
-      ($('#mintBtn').html('Minting Mock USDT...'),
-      await contract3.methods.MINT(acct).send({ from: acct })),
-    $('#mintBtn').html('Approving...'),
-    (appr = await contract3.methods.allowance(acct, CA).call()) < oamt &&
-      (await contract3.methods.approve(CA, amt).send({ from: acct })),
-    $('#mintBtn').html('Minting RG...');
-  var a = location.hash.substring(1).toLowerCase();
+  if (oamt > balUSDT) {
+    $('#mintBtn').html('Insufficient BUSD');
+    return;
+  }
+  $('#mintBtn').html('Approving...');
+  if ((await contract3.methods.allowance(acct, CA).call()) < oamt)
+    await contract3.methods.approve(CA, amt).send({ from: acct });
+  $('#mintBtn').html('Minting RG...');
+  a = location.hash.substring(1).toLowerCase();
   await contract.methods
     .mint(
       a.length > 1 && a != acct.toLowerCase()
@@ -139,13 +139,6 @@ async function connect() {
         {
           inputs: [u3, u1],
           name: 'approve',
-          outputs: [],
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-        {
-          inputs: [u3],
-          name: 'MINT',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
